@@ -2,7 +2,7 @@ import collections
 import csv
 
 def write_in_file(fileContents):
-    with open('formatted_sparqlFile', 'w', newline='') as dstFile:
+    with open('formatted_sparqlFile.csv', 'w', newline='') as dstFile:
         print("Writing in file...")
         writer = csv.writer(dstFile)
         writer.writerows(fileContents)
@@ -40,8 +40,11 @@ def process_data(data):
             currentLen = 1
         previousValue = row[0]
 
+    importantCountries = ["Canada", "United_States"]
+
     for row in data:
         currentValue = row[0]
+
         if currentValue == previousValue:
             newRow.append(row[1])
         else:
@@ -50,7 +53,10 @@ def process_data(data):
                 del newRow[2]
                 for x in range(len(newRow),maxLen):
                     newRow.append(None)
-                newRow.append(temp)
+                if temp in importantCountries:
+                    newRow.append("Northern_America")
+                else:
+                    newRow.append("Other_region")
                 newData.append(newRow)
             newRow = row
         previousValue = row[0]
