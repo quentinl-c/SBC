@@ -16,6 +16,7 @@ def clean_data(data):
         for case in row:
             case = case.replace("http://dbpedia.org/resource/", "")
             #case = case.replace("\"", "")
+            case = case.replace("\'", "")
             newRow = case.split(',')
         newData.append(newRow)
 
@@ -40,7 +41,7 @@ def process_data(data):
             currentLen = 1
         previousValue = row[0]
 
-    importantCountries = ["Canada", "United_States"]
+    importantCountries = ["\"Canada\"", "\"United_States\""]
 
     for row in data:
         currentValue = row[0]
@@ -60,6 +61,8 @@ def process_data(data):
                 newData.append(newRow)
                 #print(newRow)
             newRow = row
+            #newRow[0] = "\"" + newRow[0] + "\""
+            #newRow[1] = "\"" + newRow[1] + "\""
         previousValue = row[0]
 
     header = ["Food"]
