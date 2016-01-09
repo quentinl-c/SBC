@@ -52,7 +52,7 @@ def process_data(data):
                 temp = newRow[2]
                 del newRow[2]
                 for x in range(len(newRow),maxLen):
-                    newRow.append(None)
+                    newRow.append("?")
                 if temp in importantCountries:
                     newRow.append("Northern_America")
                 else:
