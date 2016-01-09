@@ -15,7 +15,7 @@ def clean_data(data):
         newRow = []
         for case in row:
             case = case.replace("http://dbpedia.org/resource/", "")
-            #case = case.replace("\"", "")
+            case = case.replace("\"", "")
             case = case.replace("\'", "")
             newRow = case.split(',')
         newData.append(newRow)
@@ -53,11 +53,11 @@ def process_data(data):
                 temp = newRow[2]
                 del newRow[2]
                 for x in range(len(newRow),maxLen):
-                    newRow.append('\"\"')
+                    newRow.append('')
                 if temp in importantCountries:
-                    newRow.append('\"Northern_America\"')
+                    newRow.append('Northern_America')
                 else:
-                    newRow.append('\"Other_region\"')
+                    newRow.append('Other_region')
                 newData.append(newRow)
                 #print(newRow)
             newRow = row
