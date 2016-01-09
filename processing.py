@@ -41,7 +41,7 @@ def process_data(data):
             currentLen = 1
         previousValue = row[0]
 
-    importantCountries = ["\"Canada\"", "\"United_States\""]
+    importantCountries = ["Canada", "United_States"]
 
     for row in data:
         currentValue = row[0]
