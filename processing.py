@@ -29,31 +29,37 @@ def process_data(data):
     previousValue = -1
     currentValue = -1
 
+    previousCountry = -1
+    currentCountry = -1
+
     maxLen = 1
     currentLen = 1
 
     for row in data:
         currentValue = row[0]
-        if currentValue == previousValue:
+        currentCountry = row[2]
+        if currentValue == previousValue and currentCountry == previousCountry:
             currentLen += 1
         else:
             maxLen = max(currentLen, maxLen)
             currentLen = 1
         previousValue = row[0]
+        previousCountry = row[2]
 
     importantCountries = ["Canada", "United_States"]
 
     for row in data:
         currentValue = row[0]
+        currentCountry = row[2]
 
-        if currentValue == previousValue:
+        if currentValue == previousValue and currentCountry == previousCountry:
             newRow.append(row[1])
         else:
             if not len(newRow) == 0:
                 temp = newRow[2]
                 del newRow[2]
                 for x in range(len(newRow),maxLen):
-                    newRow.append('')
+                    newRow.append('?')
                 if temp in importantCountries:
                     newRow.append('Northern_America')
                 else:
@@ -64,6 +70,7 @@ def process_data(data):
             #newRow[0] = "\"" + newRow[0] + "\""
             #newRow[1] = "\"" + newRow[1] + "\""
         previousValue = row[0]
+        previousCountry = row[2]
 
     header = ["Food"]
     for x in range(1,maxLen):
