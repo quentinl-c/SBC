@@ -5,8 +5,8 @@ import csv
 
 
 # Global variables
-posResultsForTest = 100
-negResultsForTest = 1500
+posResultsForTrain = 600
+negResultsForTrain = 600
 
 
 def write_in_file(fileContents, fileName):
@@ -56,8 +56,9 @@ def process_data(data):
         previousValue = row[0]
         previousCountry = row[2]
 
-    importantCountries = ["Canada", "United_States", "Argentina", "Cuba", "Brazil", "Mexico", "Jamaica", "Chile"]
-
+    # importantCountries = ["Canada", "United_States", "Argentina", "Cuba", "Brazil", "Mexico", "Jamaica", "Chile"]
+    importantCountries = ["Canada", "United_States", "France", "England", "Scotland", "Australia", "Germany", "Italy", "Spain", "Russia", "Poland", "Denmark", "Slovakia", "Estonia", "Lithuania", "Belgium", "Austria", "Bulgaria", "Czech_Republic", "Croatia", "Cyprus", "Malta", "Greece", "Hungary", "Ireland", "Slovenia", "Sweden", "United_Kingdom", "Portugal", "Luxembourg", "Latvia", "Albania", "Montenegro", "Serbia", "Kosovo", "Bosnia_and_Herzegovina"]
+    counter = 0
     for row in data:
         currentValue = row[0]
         currentCountry = row[2]
@@ -72,6 +73,7 @@ def process_data(data):
                     newRow.append('?')
                 if temp in importantCountries:
                     newRow.append('America')
+                    counter += 1
                 else:
                     newRow.append('Other_region')
                 newData.append(newRow)
@@ -81,6 +83,7 @@ def process_data(data):
             # newRow[1] = "\"" + newRow[1] + "\""
         previousValue = row[0]
         previousCountry = row[2]
+    print(counter)
 
     header = ["Food"]
     for x in range(1, maxLen):
@@ -91,6 +94,7 @@ def process_data(data):
 
 
 def classify(content):
+    head = content.pop(0)
     posResults = []
     negResults = []
     for row in content:
@@ -98,16 +102,17 @@ def classify(content):
             posResults.append(row)
         else:
             negResults.append(row)
-    return (posResults, negResults)
+    print(len(posResults))
+    return (head, posResults, negResults)
 
 
-def randomize(posResults, negResults):
+def randomize(head, posResults, negResults):
     trainningContent = []
     testingContent = []
     randomPosChain = get_random_chain(len(posResults))
     randomNegChain = get_random_chain(len(negResults))
-    posResultsForTrain = len(posResults) - posResultsForTest
-    negResultsForTrain = len(negResults) - negResultsForTest
+    posResultsForTest = len(posResults) - posResultsForTrain
+    negResultsForTest = len(negResults) - negResultsForTrain
 
     for i in range(0, posResultsForTrain):
         trainningContent.append(posResults[randomPosChain[i]])
@@ -121,8 +126,13 @@ def randomize(posResults, negResults):
     for j in range(negResultsForTrain, len(negResults)):
         testingContent.append(negResults[randomNegChain[j]])
 
-    return (trainningContent, testingContent)
+    random.shuffle(trainningContent)
+    random.shuffle(testingContent)
 
+    trainningContent.insert(0, head)
+    testingContent.insert(0, head)
+
+    return (trainningContent, testingContent)
 
 def get_random_chain(size):
     tab = [a for a in range(0, size)]
@@ -134,9 +144,10 @@ if __name__ == '__main__':
     with open('sparqlFile', newline='') as srcFile:
         reader = csv.reader(srcFile, delimiter=' ', quotechar='|')
         cleanFileContents = clean_data(reader)
+        write_in_file(cleanFileContents, 'clean.csv')
         processedFileContents = process_data(cleanFileContents)
-        posResults, negResults = classify(processedFileContents)
-        trainningContent, testingContent = randomize(posResults, negResults)
+        head, posResults, negResults = classify(processedFileContents)
+        trainningContent, testingContent = randomize(head, posResults, negResults)
         write_in_file(trainningContent, 'formated_train_csv.csv')
         write_in_file(testingContent, 'formated_test_csv.csv')
         # write_in_file(cleanFileContents)

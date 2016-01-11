@@ -1,0 +1,59 @@
+=== Run information ===
+
+Scheme:weka.classifiers.trees.RandomForest -I 100 -K 0 -S 1
+Relation:     formated_train_csv
+Instances:    1004
+Attributes:   18
+              food
+              ingr1
+              ingr2
+              ingr3
+              ingr4
+              ingr5
+              ingr6
+              ingr7
+              ingr8
+              ingr9
+              ingr10
+              ingr11
+              ingr12
+              ingr13
+              ingr14
+              ingr15
+              ingr16
+              origin
+Test mode:20-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Random forest of 100 trees, each constructed while considering 5 random features.
+Out of bag error: 0.3297
+
+
+
+Time taken to build model: 10.41 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         686               68.3267 %
+Incorrectly Classified Instances       318               31.6733 %
+Kappa statistic                          0.3494
+Mean absolute error                      0.4448
+Root mean squared error                  0.4626
+Relative absolute error                 89.4449 %
+Root relative squared error             92.7694 %
+Total Number of Instances             1004     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.505     0.163      0.728     0.505     0.596      0.738    America
+                 0.837     0.495      0.662     0.837     0.739      0.738    Other_region
+Weighted Avg.    0.683     0.341      0.693     0.683     0.673      0.738
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 235 230 |   a = America
+  88 451 |   b = Other_region
