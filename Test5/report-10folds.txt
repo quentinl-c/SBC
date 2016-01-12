@@ -1,0 +1,49 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -I 100 -K 0 -S 1 -num-slots 1
+Relation:     formated_train_csv-weka.filters.unsupervised.attribute.Remove-R1
+Instances:    2000
+Attributes:   5
+              ingr1
+              ingr2
+              ingr3
+              ingr4
+              origin
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Random forest of 100 trees, each constructed while considering 3 random features.
+Out of bag error: 0.2695
+
+
+
+Time taken to build model: 9.11 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1463               73.15   %
+Incorrectly Classified Instances       537               26.85   %
+Kappa statistic                          0.463 
+Mean absolute error                      0.3483
+Root mean squared error                  0.4274
+Relative absolute error                 69.6526 %
+Root relative squared error             85.4789 %
+Coverage of cases (0.95 level)          98.95   %
+Mean rel. region size (0.95 level)      93.25   %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,751    0,288    0,723      0,751    0,737      0,463    0,801     0,757     Occidental
+                 0,712    0,249    0,741      0,712    0,726      0,463    0,801     0,821     Other_region
+Weighted Avg.    0,732    0,269    0,732      0,732    0,731      0,463    0,801     0,789     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 751 249 |   a = Occidental
+ 288 712 |   b = Other_region
+

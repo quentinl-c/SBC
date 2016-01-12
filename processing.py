@@ -5,8 +5,8 @@ import csv
 
 
 # Global variables
-posResultsForTrain = 600
-negResultsForTrain = 600
+posResultsForTrain = 1000
+negResultsForTrain = 1000
 
 
 def write_in_file(fileContents, fileName):
@@ -72,7 +72,7 @@ def process_data(data):
                 for x in range(len(newRow), maxLen):
                     newRow.append('?')
                 if temp in importantCountries:
-                    newRow.append('America')
+                    newRow.append('Occidental')
                     counter += 1
                 else:
                     newRow.append('Other_region')
@@ -83,7 +83,7 @@ def process_data(data):
             # newRow[1] = "\"" + newRow[1] + "\""
         previousValue = row[0]
         previousCountry = row[2]
-    print(counter)
+    #print(counter)
 
     header = ["Food"]
     for x in range(1, maxLen):
@@ -98,13 +98,38 @@ def classify(content):
     posResults = []
     negResults = []
     for row in content:
-        if row[-1] == 'America':
+        if row[-1] == 'Occidental':
             posResults.append(row)
         else:
             negResults.append(row)
     print(len(posResults))
+    print(len(negResults))
     return (head, posResults, negResults)
 
+def classifyNumberIngredients(content):
+    head = content.pop(0)
+    for i in range (5, len(head)-1):
+        del head[5]
+    size = 0
+    posResults = []
+    negResults = []
+    for row in content:
+        size = 0
+        for i in range(1, len(row)-1):
+            if row[i] == "?":
+                break
+            else:
+                size += 1
+        if size <= 5:
+            for i in range (5, len(row)-1):
+                    del row[5]
+            if row[-1] == 'Occidental':
+                posResults.append(row)
+            else:
+                negResults.append(row)
+    print(len(posResults))
+    print(len(negResults))
+    return (head, posResults, negResults)
 
 def randomize(head, posResults, negResults):
     trainningContent = []
@@ -139,14 +164,13 @@ def get_random_chain(size):
     random.shuffle(tab)
     return tab
 
-
 if __name__ == '__main__':
     with open('sparqlFile', newline='') as srcFile:
         reader = csv.reader(srcFile, delimiter=' ', quotechar='|')
         cleanFileContents = clean_data(reader)
         write_in_file(cleanFileContents, 'clean.csv')
         processedFileContents = process_data(cleanFileContents)
-        head, posResults, negResults = classify(processedFileContents)
+        head, posResults, negResults = classifyNumberIngredients(processedFileContents)
         trainningContent, testingContent = randomize(head, posResults, negResults)
         write_in_file(trainningContent, 'formated_train_csv.csv')
         write_in_file(testingContent, 'formated_test_csv.csv')

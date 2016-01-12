@@ -48,13 +48,13 @@ Total Number of Instances             1200
 === Detailed Accuracy By Class ===
 
                TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
-                 0.712     0.307      0.699     0.712     0.705      0.783    America
+                 0.712     0.307      0.699     0.712     0.705      0.783    Occidental
                  0.693     0.288      0.706     0.693     0.7        0.783    Other_region
 Weighted Avg.    0.703     0.298      0.703     0.703     0.702      0.783
 
 === Confusion Matrix ===
 
    a   b   <-- classified as
- 427 173 |   a = America
+ 427 173 |   a = Occidental
  184 416 |   b = Other_region
 
